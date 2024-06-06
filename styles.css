@@ -1,0 +1,60 @@
+*{
+box-sizing: border-box;
+}
+
+.card{
+    margin: auto;
+    width: 500px;
+    height: auto;
+    background-color: rgb(130, 132, 134);
+    padding: 10px;
+}
+.stats{
+    display: flex;
+    justify-content: space-around;
+}
+hr{
+    border:1px solid black ;
+}
+h2{
+    text-align: center;
+    width: 480px;
+    margin: auto;
+}
+.location{
+    display: flex;
+    justify-content: space-around; 
+    border: solid ;
+}
+.location h3{
+    cursor: pointer;
+    padding: 5px;
+    border: solid 1px ;
+}
+
+/* -------------------- */
+
+#second-card{
+    background-color: rgb(130, 132, 134);
+    width: 500px;
+    margin:10px  auto;
+    
+}
+.invetory{
+    display: flex;
+    justify-content: space-around; 
+    flex-wrap: wrap;
+    gap:20px;
+}
+
+.invetory h3{
+    cursor: pointer;
+    padding: 5px;
+    border: solid 1px ;
+}
+#third-card{
+    background-color: rgb(130, 132, 134);
+    width: 500px;
+    margin:10px  auto;
+    
+}
