@@ -5,7 +5,7 @@ const money = document.getElementById('money')
 const weapon = document.getElementById('weapon')
 //      constrols
 const locationName = document.getElementById('locationName')
-const firstBtn = document.getElementById('firstbtn');
+const firstBtn = document.getElementById('firstBtn');
 const secondBtn = document.getElementById('secondBtn');
 const thirdBtn = document.getElementById('thirdBtn');
 //    inventory
@@ -18,9 +18,11 @@ const inventory5 = document.getElementById('inv5');
 
 const secondCard = document.getElementById('second-card');
 const thirdCard = document.getElementById('third-card');
+const text = document.getElementById('text')
 
-
-console.log()
+let store = false;
+let base = true;
+let wasteland = false;
 
 // ------------------------ Objects and Arrays----------------------------------
 const locations = {
@@ -89,26 +91,68 @@ const state = {
         text: 'you are in the store'
     }
 
+
 }
 //------------------------- fucntions and statments------------------------------
 
 
-function atTheStore () {
-    INVname.textContent = 'Store Invetory';
-    inventory1.textContent = 'Knife';
-    inventory2.textContent = 'Bow'; 
-    inventory3.textContent = 'Sword'; 
-    inventory4.textContent = 'Gun'; 
-    inventory5.textContent = 'Power Armer'; 
 
-    secondCard.style.display = "block";
-    thirdCard.style.display = "none";
+function locationss () {
+    if(base === true) {
+        secondCard.style.display = "none";  
+        thirdCard.style.display = "block"; 
+        text.textContent = 'you have entered the base'
+        firstBtn.textContent = 'Store'
+        secondBtn.textContent = 'Base';
+        thirdBtn.textContent = 'Wasteland'
+    } else if (store === true) {
+        secondCard.style.display = "block";
+        thirdCard.style.display = "block";
+        text.textContent = 'you have entered the store' 
+        base = false;
+        wasteland = false;
+        secondBtn.textContent = 'Base';
+        thirdBtn.textContent = 'Wasteland'
 
-
-
+    } else if (wasteland === true){
+        secondCard.style.display = "none";  
+        thirdCard.style.display = "block"; 
+        text.textContent = "you've entered the wasteLand !!!"
+        base = false;
+        store = false; 
+        firstBtn.textContent = 'Base';
+        secondBtn.textContent = 'Attack';
+        thirdBtn.textContent = 'Run!!!'
+    }
+    
 }
-function atTheBase () {
-   secondCard.style.display = "none";
+locationss()
 
-}
-atTheBase ()
+
+
+firstBtn.addEventListener('click', () => {
+    if(store !== true && firstBtn.textContent === 'Store'){
+        store = true;
+        base = false;  
+        wasteland = false;  
+    } else base = true;
+    locationss()
+})
+
+secondBtn.addEventListener('click', () => {
+    if(base !== true){
+        store = false;
+        base = true; 
+        wasteland = false;  
+    } 
+    locationss()
+})
+
+thirdBtn.addEventListener('click', () => {
+    if(wasteland !== true){
+        store = false;
+        base = false
+        wasteland = true;  
+    } 
+    locationss()
+})
