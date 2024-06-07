@@ -23,6 +23,13 @@ const text = document.getElementById('text')
 let store = false;
 let base = true;
 let wasteland = false;
+let isFighting = false;
+let myWeapon = 'Knife';
+let weaponDMG = 0
+let myHealth = 100;
+let myMoney = 10;
+let mobLife = 0;
+
 
 // ------------------------ Objects and Arrays----------------------------------
 const locations = {
@@ -35,19 +42,19 @@ const weaponsObj ={
         DMG:10,
         PRC: 10
     }, 
-    bow: { 
+    Bow: { 
         DMG:20,
         PRC: 30
     },
-    sword:{ 
+    Sword:{ 
         DMG:30,
         PRC: 40
     },
-    gun:{ 
+    Gun:{ 
         DMG:50,
         PRC: 60
     },
-    'power armer': {
+    'Power Armer': {
         DMG: 150,
         HLT: 400
     }
@@ -59,7 +66,7 @@ const mobsObj = {
         HLT: 45,
         DRP: 45
     },
-    raders: {
+    rader: {
         DMG: 30,
         HLT: 57,
         DRP: 57
@@ -95,7 +102,12 @@ const state = {
 }
 //------------------------- fucntions and statments------------------------------
 
-
+function myState () {
+   health.textContent = myHealth;
+   money.textContent = myMoney;
+   weapon.textContent = myWeapon;
+}
+myState ()
 
 function locationss () {
     if(base === true && store === false) {
@@ -105,6 +117,7 @@ function locationss () {
         firstBtn.textContent = 'Store'
         secondBtn.textContent = 'Base';
         thirdBtn.textContent = 'Wasteland'
+        wasteland = false
     } else if (store === true) {
         secondCard.style.display = "block";
         thirdCard.style.display = "block";
@@ -120,14 +133,70 @@ function locationss () {
         text.textContent = "you've entered the wasteLand !!!"
         base = false;
         store = false; 
+        isFighting = true;
         firstBtn.textContent = 'Base';
         secondBtn.textContent = 'Attack';
         thirdBtn.textContent = 'Run!!!'
+        Fighting ()
     }
   
     console.log(store)
 }
 locationss()
+
+function Fighting () {
+    let randomMob = Object.keys(mobsObj)
+    let mob = randomMob[Math.floor(Math.random() * randomMob.length )]
+    let dmg = 0;
+    
+    
+    const dialog = [`you have encountered a ${mob} what will you do?`, 'you attacked', 'it attacked','it died', 'you died' ]
+    text.textContent = dialog[0]
+    if(mob === 'goul'){
+        dmg = 20
+        mobLife = 45
+    } else if(mob === 'mirelurk Queen'){
+        dmg = 88
+        mobLife = 200
+    }
+    else if(mob === 'rader'){
+        dmg = 30
+        mobLife = 57
+    }
+    else if(mob === 'mole rat'){
+        dmg = 10
+        mobLife = 20
+    };
+
+    if(myWeapon === 'Knife'){
+        weaponDMG = 10
+    } else if (myWeapon === 'Bow') {
+        weaponDMG = 20
+    } else if (myWeapon === 'Sword') {
+        weaponDMG = 30
+    } else if (myWeapon === 'Gun') {
+        weaponDMG = 50
+    } else if (myWeapon === 'Power Armer') {
+        weaponDMG = 150
+    }
+    console.log('mob does ' + dmg + " damage")
+    console.log('your weapon does ' + weaponDMG + ' damage')
+
+    
+   
+}
+function attacked () {
+        if(mobLife > 0){
+           mobLife += -weaponDMG; 
+        } else {
+            text.textContent = `the ${mob} has died. click 'Wasteland' to continue ` 
+        }
+        console.log(mobLife)
+        console.log(weaponDMG)
+        
+}
+
+
 
 
 
@@ -137,16 +206,20 @@ firstBtn.addEventListener('click', () => {
         base = false;  
         wasteland = false;  
     } else base = true;
+
     locationss()
 })
 
 secondBtn.addEventListener('click', () => {
-    if(base !== true){
+    if(base !== true && secondBtn.textContent === 'Base'){
         store = false;
         base = true; 
         wasteland = false;  
-    } 
-    locationss()
+        locationss()
+    } else if (wasteland === true && secondBtn.textContent === 'Attack' ) {
+        attacked ()
+    }
+    
 })
 
 thirdBtn.addEventListener('click', () => {
@@ -154,6 +227,22 @@ thirdBtn.addEventListener('click', () => {
         store = false;
         base = false
         wasteland = true;  
+        locationss()
     } 
-    locationss()
+    
 })
+
+//------------------------------------
+
+const fruits = ['apples','bananans','oranges']
+const food = {
+    fruit: 'apple',
+    soup: 'tomato soup',
+    dessert: 'cake'
+}
+
+let randomFruit = fruits[Math.floor(Math.random() * fruits.length)];
+let randomFood = Object.values(food)
+let randomfood = randomFood[Math.floor(Math.random() * randomFood.length)]
+console.log(randomFruit)
+console.log(randomfood)
