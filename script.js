@@ -29,7 +29,9 @@ let weaponDMG = 0
 let myHealth = 100;
 let myMoney = 10;
 let mobLife = 0;
-
+let dmg = 0;
+let mob;
+let mobDrop;
 
 // ------------------------ Objects and Arrays----------------------------------
 const locations = {
@@ -145,27 +147,32 @@ function locationss () {
 locationss()
 
 function Fighting () {
-    let randomMob = Object.keys(mobsObj)
-    let mob = randomMob[Math.floor(Math.random() * randomMob.length )]
-    let dmg = 0;
     
+    let randomMob = Object.keys(mobsObj)
+    mob = randomMob[Math.floor(Math.random() * randomMob.length )]
     
     const dialog = [`you have encountered a ${mob} what will you do?`, 'you attacked', 'it attacked','it died', 'you died' ]
     text.textContent = dialog[0]
+    
     if(mob === 'goul'){
         dmg = 20
         mobLife = 45
+        mobDrop = 45
+
     } else if(mob === 'mirelurk Queen'){
         dmg = 88
         mobLife = 200
+        mobDrop = 200
     }
     else if(mob === 'rader'){
         dmg = 30
         mobLife = 57
+        mobDrop = 57
     }
     else if(mob === 'mole rat'){
         dmg = 10
         mobLife = 20
+        mobDrop = 20
     };
 
     if(myWeapon === 'Knife'){
@@ -182,18 +189,26 @@ function Fighting () {
     console.log('mob does ' + dmg + " damage")
     console.log('your weapon does ' + weaponDMG + ' damage')
 
-    
    
 }
+let fightingState = true;
 function attacked () {
-        if(mobLife > 0){
-           mobLife += -weaponDMG; 
-        } else {
-            text.textContent = `the ${mob} has died. click 'Wasteland' to continue ` 
+        if(mobLife > 1){
+           
+           mobLife += -weaponDMG;
+            if (mobLife < 0) {
+                mobLife = 0
+            }
+           text.textContent =' the ' + mob + ' has ' + mobLife + ' life'
+        } else if (mobLife < 1 && fightingState === true) {
+            text.textContent = `the ${mob} has died. click 'Wasteland' to continue`;
+            myMoney += mobDrop;
+            fightingState = false
+      
         }
-        console.log(mobLife)
-        console.log(weaponDMG)
+        console.log('the mob dropssss ' + mobDrop)
         
+        myState ()
 }
 
 
@@ -234,15 +249,3 @@ thirdBtn.addEventListener('click', () => {
 
 //------------------------------------
 
-const fruits = ['apples','bananans','oranges']
-const food = {
-    fruit: 'apple',
-    soup: 'tomato soup',
-    dessert: 'cake'
-}
-
-let randomFruit = fruits[Math.floor(Math.random() * fruits.length)];
-let randomFood = Object.values(food)
-let randomfood = randomFood[Math.floor(Math.random() * randomFood.length)]
-console.log(randomFruit)
-console.log(randomfood)
