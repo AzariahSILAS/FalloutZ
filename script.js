@@ -98,7 +98,7 @@ const state = {
 
 
 function locationss () {
-    if(base === true) {
+    if(base === true && store === false) {
         secondCard.style.display = "none";  
         thirdCard.style.display = "block"; 
         text.textContent = 'you have entered the base'
@@ -124,7 +124,8 @@ function locationss () {
         secondBtn.textContent = 'Attack';
         thirdBtn.textContent = 'Run!!!'
     }
-    
+  
+    console.log(store)
 }
 locationss()
 
