@@ -10,11 +10,14 @@ const secondBtn = document.getElementById('secondBtn');
 const thirdBtn = document.getElementById('thirdBtn');
 //    inventory
 const INVname = document.getElementById('INVname')
-const inventory1 = document.getElementById('inv1');
-const inventory2 = document.getElementById('inv2');
-const inventory3 = document.getElementById('inv3');
-const inventory4 = document.getElementById('inv4');
-const inventory5 = document.getElementById('inv5');
+const KnifeBtn = document.getElementById('KnifeBtn');
+const BowBtn = document.getElementById('BowBtn');
+const SwordBtn = document.getElementById('SwordBtn');
+const Gunbtn = document.getElementById('GunBtn');
+const PowerArmerBtn = document.getElementById('PowerArmerBtn');
+const HealthBtn = document.getElementById('HealthBtn');
+
+
 
 const secondCard = document.getElementById('second-card');
 const thirdCard = document.getElementById('third-card');
@@ -24,7 +27,7 @@ let store = false;
 let base = true;
 let wasteland = false;
 let isFighting = false;
-let myWeapon = 'Knife';
+let myWeapon = 'Stick';
 let weaponDMG = 0
 let myHealth = 100;
 let myMoney = 10;
@@ -59,6 +62,12 @@ const weaponsObj ={
     'Power Armer': {
         DMG: 150,
         HLT: 400
+    },
+    stick:{
+        DMG: 5
+    },
+    Health:{
+        PRC: 50
     }
 };
 
@@ -185,6 +194,8 @@ function Fighting () {
         weaponDMG = 50
     } else if (myWeapon === 'Power Armer') {
         weaponDMG = 150
+    } else if (myWeapon === 'Stick'){
+        weaponDMG = 5 
     }
     console.log('mob does ' + dmg + " damage")
     console.log('your weapon does ' + weaponDMG + ' damage')
@@ -192,20 +203,38 @@ function Fighting () {
    
 }
 let fightingState = true;
+
+function gameOver() {
+    if(myHealth < 0){
+        myHealth = 0
+        text.textContent =' you died try Again'
+
+    }
+} 
+gameOver()
+
+
 function attacked () {
-        if(mobLife > 1){
-           
-           mobLife += -weaponDMG;
+        
+    
+        if(mobLife > 1 && myHealth > 0){
+            myHealth -= + dmg;
+            mobLife += -weaponDMG;
             if (mobLife < 0) {
                 mobLife = 0
             }
            text.textContent =' the ' + mob + ' has ' + mobLife + ' life'
+           
+
+
+
         } else if (mobLife < 1 && fightingState === true) {
             text.textContent = `the ${mob} has died. click 'Wasteland' to continue`;
             myMoney += mobDrop;
             fightingState = false
       
         }
+        
         console.log('the mob dropssss ' + mobDrop)
         
         myState ()
@@ -247,5 +276,32 @@ thirdBtn.addEventListener('click', () => {
     
 })
 
-//------------------------------------
+//-----------------store items-------------------
 
+
+KnifeBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj.Knife.PRC ){
+        myWeapon = 'Knife'
+        myMoney -= weaponsObj.Knife.PRC;
+        
+    }
+    myState ()
+})
+
+BowBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj.Bow.PRC ){
+        myWeapon = 'Bow'
+        myMoney -= weaponsObj.Bow.PRC;
+        
+    }
+    myState ()
+})
+
+HealthBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj.Health.PRC ){
+        myHealth += weaponsObj.Health.PRC
+        myMoney -= weaponsObj.Health.PRC;
+        
+    }
+    myState ()
+})
