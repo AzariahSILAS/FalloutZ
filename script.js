@@ -13,7 +13,7 @@ const INVname = document.getElementById('INVname')
 const KnifeBtn = document.getElementById('KnifeBtn');
 const BowBtn = document.getElementById('BowBtn');
 const SwordBtn = document.getElementById('SwordBtn');
-const Gunbtn = document.getElementById('GunBtn');
+const GunBtn = document.getElementById('GunBtn');
 const PowerArmerBtn = document.getElementById('PowerArmerBtn');
 const HealthBtn = document.getElementById('HealthBtn');
 
@@ -61,7 +61,8 @@ const weaponsObj ={
     },
     'Power Armer': {
         DMG: 150,
-        HLT: 400
+        HLT: 400,
+        PRC: 200
     },
     stick:{
         DMG: 5
@@ -197,8 +198,8 @@ function Fighting () {
     } else if (myWeapon === 'Stick'){
         weaponDMG = 5 
     }
-    console.log('mob does ' + dmg + " damage")
-    console.log('your weapon does ' + weaponDMG + ' damage')
+    // console.log('mob does ' + dmg + " damage")
+    // console.log('your weapon does ' + weaponDMG + ' damage')
 
    
 }
@@ -224,6 +225,7 @@ function attacked () {
                 mobLife = 0
             }
            text.textContent =' the ' + mob + ' has ' + mobLife + ' life'
+           fightingState = true;
            
 
 
@@ -278,7 +280,6 @@ thirdBtn.addEventListener('click', () => {
 
 //-----------------store items-------------------
 
-
 KnifeBtn.addEventListener('click', () => {
     if(myMoney >= weaponsObj.Knife.PRC ){
         myWeapon = 'Knife'
@@ -295,6 +296,34 @@ BowBtn.addEventListener('click', () => {
         
     }
     myState ()
+})
+
+SwordBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj.Sword.PRC ){
+        myWeapon = 'Sword'
+        myMoney -= weaponsObj.Sword.PRC;
+        
+    }
+    myState ()   
+})
+
+GunBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj.Gun.PRC ){
+        myWeapon = 'Gun'
+        myMoney -= weaponsObj.Gun.PRC;
+        
+    }
+    myState ()   
+})
+
+PowerArmerBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj["Power Armer"].PRC ){
+        myWeapon = 'Power Armer'
+        myMoney -= weaponsObj["Power Armer"].PRC;
+        myHealth = weaponsObj["Power Armer"].HLT;
+        
+    }
+    myState ()   
 })
 
 HealthBtn.addEventListener('click', () => {
