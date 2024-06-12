@@ -37,11 +37,13 @@ let mob;
 let mobDrop;
 
 // ------------------------ Objects and Arrays----------------------------------
-const locations = {
-    store: 'Store',
-    base: 'base',
-    wasteLand: 'WasteLand'
-}
+// function Weapons(name, DMG, PRC, HLT) {
+//     this.name = name;
+//     this.DMG = DMG;
+//     this.PRC = PRC;
+//     this.HLT = HLT;
+// }
+
 const weaponsObj ={
     Knife: {
         DMG:10,
@@ -280,6 +282,13 @@ thirdBtn.addEventListener('click', () => {
 
 //-----------------store items-------------------
 
+function Weapons(name, DMG, PRC, HLT) {
+    this.name = name;
+    this.DMG = DMG;
+    this.PRC = PRC;
+    this.HLT = HLT;
+}
+
 KnifeBtn.addEventListener('click', () => {
     if(myMoney >= weaponsObj.Knife.PRC ){
         myWeapon = 'Knife'
@@ -318,7 +327,7 @@ GunBtn.addEventListener('click', () => {
 
 PowerArmerBtn.addEventListener('click', () => {
     if(myMoney >= weaponsObj["Power Armer"].PRC ){
-        myWeapon = 'Power Armer'
+        myWeapon = 'Power Armer';
         myMoney -= weaponsObj["Power Armer"].PRC;
         myHealth = weaponsObj["Power Armer"].HLT;
         

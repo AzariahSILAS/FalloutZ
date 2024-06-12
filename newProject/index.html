@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+           font-family: monospace ; 
+        }
+        div{
+            background-color: aqua;
+            display: flex;
+            width: 500px;
+            margin: 0 auto;
+            justify-content: space-around;
+        }
+        h2{
+            cursor: pointer;
+            padding: 3px 10px;
+            border: solid black 1px;
+        }
+        h2:hover{
+            padding: 5px 12px; 
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <h2 id="stick">stick</h2>
+        <h2 id="knife">knife</h2>
+        <h2 id="sword">sword</h2>
+        <h2 id="gun">gun</h2>
+    </div>
+    <script>
+        const box = document.getElementById('box')
+        const stickBtn = document.getElementById('stick')
+        const knifeBtn = document.getElementById('knife')
+        const swordBtn = document.getElementById('sword')
+        const gunBtn = document.getElementById('gun')
+        //-------------------------------
+        function WeaponsObj(name, dmg, prc){
+            this.name = name;
+            this.dmg = dmg;
+            this.prc = prc;
+            this.greet = function () {
+                console.log(`your weapon is ${this.name}`)
+            }
+        }
+        const weaponBtn = [stickBtn, knifeBtn, swordBtn, gunBtn]
+        const weapons = [stick,knife,sword,gun];
+        for (i=0; i < weapons.length; i++){
+            weapons[0] = new WeaponsObj('Stick', 5, 10 )
+            weapons[1] = new WeaponsObj('Knife', 10, 20 )
+            weapons[2] = new WeaponsObj('Sword', 20, 40 )
+            weapons[3] = new WeaponsObj('Gun', 30, 60 )
+        }
+        console.log(weapons[2].greet())
+        
+
+
+        for (i=0; i < weaponBtn.length; i++){
+            
+            weaponBtn[i].addEventListener('click', ()=> {
+                console.log('clicked')
+            })
+        }
+    </script>
+</body>
+</html>
