@@ -19,8 +19,6 @@ const HealthBtn = document.getElementById('HealthBtn');
 
 
 
-
-
 const secondCard = document.getElementById('second-card');
 const thirdCard = document.getElementById('third-card');
 const text = document.getElementById('text')
@@ -29,25 +27,81 @@ let store = false;
 let base = true;
 let wasteland = false;
 let isFighting = false;
-let myWeapon = new Weapons('stick', 10, undefined );
+let myWeapon = 'Stick';
 let weaponDMG = 0
 let myHealth = 100;
-let myMoney = 1000;
+let myMoney = 10;
 let mobLife = 0;
 let dmg = 0;
 let mob;
 let mobDrop;
 
 // ------------------------ Objects and Arrays----------------------------------
-function allLocations(btn1,btn2,btn3){
-    this.btn1 = btn1;
-    this.btn2 = btn2;
-    this.btn3 = btn3;
-}
+// function Weapons(name, DMG, PRC, HLT) {
+//     this.name = name;
+//     this.DMG = DMG;
+//     this.PRC = PRC;
+//     this.HLT = HLT;
+// }
+
+const weaponsObj ={
+    Knife: {
+        DMG:10,
+        PRC: 10
+    }, 
+    Bow: { 
+        DMG:20,
+        PRC: 30
+    },
+    Sword:{ 
+        DMG:30,
+        PRC: 40
+    },
+    Gun:{ 
+        DMG:50,
+        PRC: 60
+    },
+    'Power Armer': {
+        DMG: 150,
+        HLT: 400,
+        PRC: 200
+    },
+    stick:{
+        DMG: 5
+    },
+    Health:{
+        PRC: 50
+    }
+};
+
+const mobsObj = {
+    goul:{
+        DMG: 20,
+        HLT: 45,
+        DRP: 45
+    },
+    rader: {
+        DMG: 30,
+        HLT: 57,
+        DRP: 57
+    },
+    'mole rat': {
+        DMG: 10,
+        HLT: 20,
+        DRP: 20
+    },
+    'mirelurk Queen': {
+        DMG: 88,
+        HLT: 200,
+        DRP: 200
+    }
+
+};
 const state = {
     base: {
         buttons:['Store','Base','Wasteland'],
         text: 'you are in the base'
+
     },
     store: {
         buttons:['Store','Base','Wasteland'],
@@ -65,7 +119,7 @@ const state = {
 function myState () {
    health.textContent = myHealth;
    money.textContent = myMoney;
-   weapon.textContent = myWeapon.name;
+   weapon.textContent = myWeapon;
 }
 myState ()
 
@@ -105,8 +159,8 @@ function locationss () {
 locationss()
 
 function Fighting () {
-    const mobArray = ['goul', 'mirelurk Queen', 'rader', 'mole rat' ,]
-    let randomMob = mobArray
+    
+    let randomMob = Object.keys(mobsObj)
     mob = randomMob[Math.floor(Math.random() * randomMob.length )]
     
     const dialog = [`you have encountered a ${mob} what will you do?`, 'you attacked', 'it attacked','it died', 'you died' ]
@@ -235,48 +289,57 @@ function Weapons(name, DMG, PRC, HLT) {
     this.HLT = HLT;
 }
 
+KnifeBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj.Knife.PRC ){
+        myWeapon = 'Knife'
+        myMoney -= weaponsObj.Knife.PRC;
+        
+    }
+    myState ()
+})
 
-const shopBtns = [KnifeBtn, BowBtn, SwordBtn, GunBtn, PowerArmerBtn, HealthBtn]
+BowBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj.Bow.PRC ){
+        myWeapon = 'Bow'
+        myMoney -= weaponsObj.Bow.PRC;
+        
+    }
+    myState ()
+})
 
-for(let i = 0; i < shopBtns.length; i++) {
-    shopBtns[i].addEventListener('click', ()=>{
-        if(i === 0  ){
-            myWeapon = new Weapons("Knife", 10, 10)
-            myMoney -= myWeapon.PRC;
-            console.log(myWeapon.DMG)
-            myState ()
-            console.log(i)
-        } else if(i === 1){
-            myWeapon = new Weapons("Bow", 20, 30)
-            myMoney -= myWeapon.PRC;
-           myState ()
-           console.log('this') 
-        } else if(i === 2 ){
-            myWeapon = new Weapons("Sword", 30, 40)
-            myMoney -= myWeapon.PRC;
-            myState () 
-            console.log('worked')
-        } else if(i === 3 ){
-            myWeapon = new Weapons("Gun", 60, 60)
-            myMoney -= myWeapon.PRC;
-            myState () 
-            console.log('Great')
-        } else if(i === 4 ){
-            myWeapon = new Weapons("Power Armer", 150, 200, 400)
-            myMoney -= myWeapon.PRC;
-            myState () 
-            console.log(myWeapon.name)
-            console.log('damage is '+myWeapon.DMG)
-            console.log('price is '+myWeapon.PRC)
-            console.log('health is '+myWeapon.HLT)
-        } else if(i === 5 ){
-            myWeapon = new Weapons("Health", undefined, 50, 50)
-            myMoney -= myWeapon.PRC;
-            myState () 
-            console.log(myWeapon.name)
-            console.log('damage is '+myWeapon.DMG)
-            console.log('price is '+myWeapon.PRC)
-            console.log('health is '+myWeapon.HLT)
-        }  
-    })
-} 
+SwordBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj.Sword.PRC ){
+        myWeapon = 'Sword'
+        myMoney -= weaponsObj.Sword.PRC;
+        
+    }
+    myState ()   
+})
+
+GunBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj.Gun.PRC ){
+        myWeapon = 'Gun'
+        myMoney -= weaponsObj.Gun.PRC;
+        
+    }
+    myState ()   
+})
+
+PowerArmerBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj["Power Armer"].PRC ){
+        myWeapon = 'Power Armer';
+        myMoney -= weaponsObj["Power Armer"].PRC;
+        myHealth = weaponsObj["Power Armer"].HLT;
+        
+    }
+    myState ()   
+})
+
+HealthBtn.addEventListener('click', () => {
+    if(myMoney >= weaponsObj.Health.PRC ){
+        myHealth += weaponsObj.Health.PRC
+        myMoney -= weaponsObj.Health.PRC;
+        
+    }
+    myState ()
+})

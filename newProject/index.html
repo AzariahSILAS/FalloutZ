@@ -12,8 +12,9 @@
             background-color: aqua;
             display: flex;
             width: 500px;
-            margin: 0 auto;
+            margin: 0 auto 10px auto;
             justify-content: space-around;
+            
         }
         h2{
             cursor: pointer;
@@ -27,6 +28,10 @@
     </style>
 </head>
 <body>
+    <div>
+        <h1 id="money">MONEY</h1>
+        <h1 id="WEAPON">WEAPON:</h1>
+    </div>
     <div id="box">
         <h2 id="stick">stick</h2>
         <h2 id="knife">knife</h2>
@@ -34,38 +39,63 @@
         <h2 id="gun">gun</h2>
     </div>
     <script>
-        const box = document.getElementById('box')
+        const WEAPON = document.getElementById('WEAPON')
+        const money = document.getElementById('money')
         const stickBtn = document.getElementById('stick')
         const knifeBtn = document.getElementById('knife')
         const swordBtn = document.getElementById('sword')
         const gunBtn = document.getElementById('gun')
+        let myWeapon = new WeaponsObj('Stick', 5, 10 )
+        let myMoney = 100
         //-------------------------------
+        function stats (){
+            WEAPON.textContent = `WEAPON: ${myWeapon.name}`
+            money.textContent = `money: $${myMoney}` 
+        }
+        stats ()
+        
+        
         function WeaponsObj(name, dmg, prc){
             this.name = name;
             this.dmg = dmg;
             this.prc = prc;
             this.greet = function () {
-                console.log(`your weapon is ${this.name}`)
+                console.log(`your weapon is a ${this.name}`)
             }
         }
         const weaponBtn = [stickBtn, knifeBtn, swordBtn, gunBtn]
-        const weapons = [stick,knife,sword,gun];
-        for (i=0; i < weapons.length; i++){
-            weapons[0] = new WeaponsObj('Stick', 5, 10 )
-            weapons[1] = new WeaponsObj('Knife', 10, 20 )
-            weapons[2] = new WeaponsObj('Sword', 20, 40 )
-            weapons[3] = new WeaponsObj('Gun', 30, 60 )
-        }
-        console.log(weapons[2].greet())
+       
         
 
 
-        for (i=0; i < weaponBtn.length; i++){
+        for (let i=0; i < weaponBtn.length; i++){
             
             weaponBtn[i].addEventListener('click', ()=> {
-                console.log('clicked')
+                if(i === 0 && myMoney >= 10) {
+                    myWeapon = new WeaponsObj('Stick', 5, 10 )
+                    myMoney -= myWeapon.prc;
+                    stats ()
+                    console.log(myWeapon.greet())
+                } else if(i === 1 && myMoney >= 20) {
+                    myWeapon = new WeaponsObj('Knife', 10, 20 )
+                    myMoney -= myWeapon.prc;
+                    stats ()
+                    console.log(myWeapon.greet())
+                } else if(i === 2 && myMoney >= 40) {
+                    myWeapon = new WeaponsObj('Sword', 20, 40 )
+                    myMoney -= myWeapon.prc;
+                    stats ()
+                    console.log(myWeapon.greet())
+                }else if(i === 3 && myMoney >= 60) {
+                    myWeapon = new WeaponsObj('Gun', 30, 60 )
+                    myMoney -= myWeapon.prc;
+                    stats ()
+                    console.log(myWeapon.greet())
+                }
+                
             })
         }
+        
     </script>
 </body>
 </html>
